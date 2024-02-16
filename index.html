@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Advanced File Upload</title>
+   <link rel="stylesheet" href="styles.css">
+   <style>
+      body {
+         font-family: Arial, sans-serif;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+         margin: 0;
+      }
+
+      .file-upload-container {
+         text-align: center;
+      }
+
+      .file-drop {
+         border: 2.5px dashed #cdcdcd;
+         padding: 30px 40px;
+         cursor: pointer;
+      }
+
+      .file-input {
+         display: none;
+      }
+
+      
+
+      .file-row {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 10px;
+         margin-top: 10px;
+         background: #FFFFFF;
+         border: 0 solid #E2E8F0;
+         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+         box-sizing: border-box;
+         color: #1A202C;
+         font-family: Inter, sans-serif;
+         font-size: 1rem;
+         font-weight: 700;
+         height: 56px;
+         line-height: 24px;
+         overflow-wrap: break-word;
+         text-decoration: none;
+         width: 100%;
+         border-radius: 8px;
+         cursor: pointer;
+         user-select: none;
+         -webkit-user-select: none;
+         touch-action: manipulation;
+      }
+
+      .file-name {
+         flex: 1;
+         /* Allow the file name to take up available space */
+         margin-right: 10px;
+         /* Add margin to the right of the file name */
+      }
+
+      .remove-file {
+         cursor: pointer;
+         color: red;
+         margin-left: 10px;
+         border: 1px solid red;
+         padding: 7px;
+         border-radius: 50%;
+         height: 12px;
+         width: 12px;
+         /* Make the close button round */
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+
+
+
+      .submit-button {
+         align-items: center;
+         appearance: none;
+         background-color: #fff;
+         border-radius: 24px;
+         border-style: none;
+         box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+         box-sizing: border-box;
+         color: #3c4043;
+         cursor: pointer;
+         display: inline-flex;
+         fill: currentcolor;
+         font-family: "Google Sans", Roboto, Arial, sans-serif;
+         font-size: 14px;
+         font-weight: 500;
+         height: 48px;
+         justify-content: center;
+         letter-spacing: .25px;
+         line-height: normal;
+         max-width: 100%;
+         overflow: visible;
+         padding: 2px 24px;
+         position: relative;
+         text-align: center;
+         text-transform: none;
+         transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+         user-select: none;
+         -webkit-user-select: none;
+         touch-action: manipulation;
+         width: 300px;
+         will-change: transform, opacity;
+         z-index: 0;
+         margin: 10px;
+      }
+
+
+      .scan-button {
+         align-items: center;
+         appearance: none;
+         background-color: #fff;
+         border-radius: 24px;
+         border-style: none;
+         box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+         box-sizing: border-box;
+         color: #3c4043;
+         cursor: pointer;
+         display: inline-flex;
+         fill: currentcolor;
+         font-family: "Google Sans", Roboto, Arial, sans-serif;
+         font-size: 14px;
+         font-weight: 500;
+         height: 48px;
+         justify-content: center;
+         letter-spacing: .25px;
+         line-height: normal;
+         max-width: 100%;
+         overflow: visible;
+         padding: 2px 24px;
+         position: relative;
+         text-align: center;
+         text-transform: none;
+         transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+         user-select: none;
+         -webkit-user-select: none;
+         touch-action: manipulation;
+         width: auto;
+         will-change: transform, opacity;
+         z-index: 0;
+      }
+
+
+      .button-17:hover {
+         background: #d3d3d3;
+         color: #174ea6;
+      }
+
+      .button-group {
+         display: inline;
+         flex-direction: row;
+         justify-content: space-between;
+
+      }
+
+      #selectedFiles {
+         overflow-y: auto; /* Enable vertical scrolling */
+         max-height: 200px;
+         margin: 20px;
+         margin-top: 20px;
+         font-size: 16px;
+      }
+      
+      #selectedFiles::-webkit-scrollbar {
+         width: 6px; /* Set the width of the scrollbar */
+      }
+      
+      #selectedFiles::-webkit-scrollbar-thumb {
+         background-color: #949494; /* Set the color of the scrollbar thumb */
+         border-radius: 5px; /* Add rounded corners to the thumb */
+      }
+      
+      #selectedFiles::-webkit-scrollbar-track {
+         background-color: #f5f5f5; /* Set the color of the scrollbar track */
+      }
+      
+   </style>
+</head>
+
+<body>
+   <div class="file-upload-container">
+      <div id="fileCounter">Total Files: 0</div>
+      <div class="file-drop" id="fileDrop">
+         <p>Drag & Drop files here or</p>
+         <label for="fileInput" class="file-input-label">Click to upload a file</label>
+         <input type="file" id="fileInput" class="file-input"
+            accept="image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.zip"
+            multiple />
+         <button id="scanButton" class="scan-button">Scan</button>
+
+      </div>
+
+      <div class="button-group">
+         <button id="submitButton" class="submit-button">Submit All</button>
+      </div>
+      <div id="selectedFiles" class="selected-files"></div>
+
+   </div>
+
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   <script src="html2pdf.bundle.min.js"></script>
+
+   <script>
+      document.addEventListener('DOMContentLoaded', () => {
+         const fileInput = document.getElementById('fileInput');
+         const fileDrop = document.getElementById('fileDrop');
+         const selectedFiles = document.getElementById('selectedFiles');
+         const scanButton = document.getElementById('scanButton');
+         const fileCounter = document.getElementById('fileCounter');
+
+         // Overall base drag and drop
+         document.body.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+         });
+
+         document.body.addEventListener('drop', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+         });
+
+         fileDrop.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileDrop.classList.add('drag-over');
+         });
+
+         fileDrop.addEventListener('dragleave', () => {
+            fileDrop.classList.remove('drag-over');
+         });
+
+         fileDrop.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileDrop.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+            e.stopPropagation(); // Stop propagation to prevent duplication
+         });
+
+         fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+         });
+
+         scanButton.addEventListener('click', () => {
+            openCameraAndCapture();
+         });
+
+         async function openCameraAndCapture() {
+            try {
+               const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+               const video = document.createElement('video');
+               document.body.appendChild(video);
+               video.srcObject = stream;
+
+               video.onloadedmetadata = (e) => {
+                  video.play();
+               };
+
+               // Capture image from video when the user clicks "Scan"
+               video.addEventListener('click', () => {
+                  captureImageFromVideo(video);
+               });
+            } catch (error) {
+               console.error('Error accessing camera:', error);
+            }
+         }
+
+         function captureImageFromVideo(video) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageDataURL = canvas.toDataURL('image/png');
+
+            const fileName = `scannedImage_${new Date().getTime()}.pdf`;
+            const fileInfo = { name: fileName, dataURL: imageDataURL };
+
+            convertImageToPDF(fileInfo);
+         }
+
+         function convertImageToPDF(fileInfo) {
+            const pdfOptions = { margin: 10, filename: fileInfo.name };
+
+            html2pdf().from(fileInfo.dataURL).set(pdfOptions).outputPdf(pdf => {
+               const pdfBlob = new Blob([pdf], { type: 'application/pdf' });
+
+               appendFileRow({ name: fileInfo.name, file: pdfBlob });
+            });
+         }
+
+
+         const existingFileNames = [];
+         let totalFiles = 0;
+
+         function updateFileCounter() {
+            fileCounter.textContent = `Total Files: ${totalFiles}`;
+         }
+
+         function handleFiles(files) {
+            if (files.length > 0) {
+               for (const file of files) {
+                  if (isValidFileType(file)) {
+                     const fileName = file.name;
+
+                     // Check if the file with the same name already exists
+                     if (existingFileNames.includes(fileName)) {
+                        // Handle duplicate file, you can choose to override or block
+                        console.log(`File with name ${fileName} already exists!`);
+                        continue; // Skip processing the duplicate file
+                     }
+
+                     existingFileNames.push(fileName); // Add the filename to the list
+                     totalFiles += 1; // Increment the total files counter
+
+                     if (file.type === 'application/zip') {
+                        unzipFile(file);
+                     } else {
+                        const fileInfo = {
+                           name: fileName,
+                           type: file.type,
+                           file: file
+                        };
+                        appendFileRow(fileInfo);
+                     }
+                  }
+               }
+
+               updateFileCounter(); // Update the file counter after handling files
+            }
+         }
+
+         function isValidFileType(file) {
+            const acceptedTypes = ['image', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/zip', 'text/plain'];
+            return acceptedTypes.some(type => file.type.startsWith(type)) && file.type !== 'image/svg+xml';
+         }
+
+         function appendFileRow(fileInfo) {
+            const fileRow = document.createElement('div');
+            fileRow.classList.add('file-row');
+
+            const fileInfoDiv = document.createElement('div');
+            fileInfoDiv.textContent = `Selected File: ${fileInfo.name}`;
+            fileRow.appendChild(fileInfoDiv);
+
+            const removeButton = document.createElement('div');
+            removeButton.classList.add('remove-file');
+            removeButton.textContent = 'X';
+            removeButton.addEventListener('click', () => {
+               fileRow.remove();
+               removeFileFromStorage(fileInfo);
+            });
+            fileRow.appendChild(removeButton);
+
+            selectedFiles.appendChild(fileRow);
+
+            // Store the file info in local storage
+            const storedFiles = JSON.parse(localStorage.getItem('selectedFiles')) || [];
+            storedFiles.push(fileInfo);
+            localStorage.setItem('selectedFiles', JSON.stringify(storedFiles));
+         }
+
+         async function uploadFile(fileBlob, fileInfo) {
+            // Your upload logic
+         }
+
+         function removeFileFromStorage(fileInfo) {
+            const storedFiles = JSON.parse(localStorage.getItem('selectedFiles')) || [];
+            const updatedFiles = storedFiles.filter(file => file.name !== fileInfo.name);
+            localStorage.setItem('selectedFiles', JSON.stringify(updatedFiles));
+         }
+
+         function unzipFile(zipFile) {
+            // Add your unzip logic here
+            // For simplicity, let's assume it returns an array of file blobs
+            const unzippedFiles = [];
+
+            for (const file of unzippedFiles) {
+               const fileName = file.name;
+               const fileInfo = { name: fileName };
+               appendFileRow(fileInfo);
+            }
+         }
+      });
+      const submitButton = document.getElementById('submitButton');
+      submitButton.addEventListener('click', () => {
+         const storedFiles = JSON.parse(localStorage.getItem('selectedFiles')) || [];
+
+         // Prepare file data for submission (you may need to adjust this based on your server requirements)
+         const formData = new FormData();
+         storedFiles.forEach(fileInfo => {
+            formData.append('files[]', fileInfo.file);
+         });
+
+         // Example: Send the files using jQuery AJAX
+         $.ajax({
+            url: 'your_server_endpoint', // Replace with your server endpoint
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+               console.log('Files submitted successfully:', response);
+               // Optionally, you can clear the selected files after submission
+               localStorage.removeItem('selectedFiles');
+               updateFileCounter(); // Update the file counter after handling files
+               selectedFiles.innerHTML = ''; // Clear the displayed files
+            },
+            error: function (error) {
+               console.error('Error submitting files:', error);
+            }
+         });
+      });
+
+   </script>
+</body>
+
+</html>

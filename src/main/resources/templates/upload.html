@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Advanced File Upload</title>
+   <link rel="stylesheet" href="/css/upload.css">
+</head>
+
+<body>
+   <div class="file-upload-container">
+      <div id="fileCounter">Total Files: 0</div>
+      <div class="file-drop" id="fileDrop">
+         <p>Drag & Drop files here or</p>
+         <label for="fileInput" class="file-input-label">Click to upload a file</label>
+         <input type="file" id="fileInput" class="file-input"
+            accept="image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.zip"
+            multiple />
+         <button id="scanButton" class="scan-button">Scan</button>
+
+      </div>
+
+      <div class="button-group">
+         <button id="submitButton" class="submit-button">Submit</button>
+      </div>
+      <div id="selectedFiles" class="selected-files"></div>
+
+   </div>
+
+
+   <script src="js/jquery-3.6.4.min.js"></script>
+   <script src="js/sweetalert.min.js"></script>
+   <script src="js/upload.js"></script>
+
+   <script src="html2pdf.bundle.min.js"></script>
+
+
+</body>
+
+</html>

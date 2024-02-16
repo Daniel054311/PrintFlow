@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+   <link th:href="@{/css/dashboard.css}" rel="stylesheet" />
+   <link th:href="@{/css/toast.css}" rel="stylesheet" />
+   <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+   <title>PrintFlow</title>
+
+</head>
+
+<body>
+
+   <div class="sidebar">
+      <div class="logo-details">
+         <i class="bx"> <img width="30px" style="border-radius: 100px;" height="30px"
+               src="https://i.pinimg.com/originals/22/cf/54/22cf5404f2941eb19ecf01c77fff8ff4.jpg" alt=""></i>
+         <span class="logo_name">PrintFlow</span>
+      </div>
+      <ul class="nav-links">
+         <li>
+            <a href="#" class="active">
+               <i class="bx bx-grid-alt"></i>
+               <span class="links_name">Home</span>
+            </a>
+         </li>
+         <li>
+            <a href="/dashboard/users">
+               <i class="bx bx-box"></i>
+               <span class="links_name">Users</span>
+            </a>
+         </li>
+         <li>
+            <a href="#">
+               <i class="bx bx-list-ul"></i>
+               <span class="links_name">Activities</span>
+            </a>
+         </li>
+
+         <li>
+            <a href="#">
+               <i class="bx bx-message"></i>
+               <span class="links_name">Feedback</span>
+            </a>
+         </li>
+
+         <li>
+            <a href="#">
+               <i class="bx bx-cog"></i>
+               <span class="links_name">Setting</span>
+            </a>
+         </li>
+         <li class="log_out">
+            <a href="#">
+               <i class="bx bx-log-out"></i>
+               <span class="links_name">Log out</span>
+            </a>
+         </li>
+      </ul>
+   </div>
+   <section class="home-section">
+      <nav>
+         <div class="sidebar-button">
+            <i class="bx bx-menu sidebarBtn"></i>
+            <span class="dashboard">Home</span>
+         </div>
+         <div class="search-box">
+            <input type="text" placeholder="Search..." />
+            <i class="bx bx-search"></i>
+         </div>
+
+         <div class="profile-details">
+            <img src="images/profile.jpg" alt="" />
+            <span class="admin_name">The Great</span>
+            <i class="bx bx-chevron-down"></i>
+         </div>
+      </nav>
+
+      <div class="home-content">
+         <div class="overview-boxes">
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">40,876</div>
+                  <div class="indicator">
+                     <i class="bx bx-up-arrow-alt"></i>
+                     <span class="text">Up from total</span>
+                  </div>
+               </div>
+               <i class="bx bx-cart-alt cart"></i>
+            </div>
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">38,876</div>
+                  <div class="indicator">
+                     <i class="bx bx-up-arrow-alt"></i>
+                     <span class="text">Up from scanning</span>
+                  </div>
+               </div>
+               <i class="bx bxs-cart-add cart two"></i>
+            </div>
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">Ghs 12,876</div>
+                  <div class="indicator">
+                     <i class="bx bx-up-arrow-alt"></i>
+                     <span class="text">Up from typing</span>
+                  </div>
+               </div>
+               <i class="bx bx-cart cart three"></i>
+            </div>
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">Ghs 12,876</div>
+                  <div class="indicator">
+                     <i class="bx bx-up-arrow-alt"></i>
+                     <span class="text">Up from printing</span>
+                  </div>
+               </div>
+               <i class="bx bx-cart cart three"></i>
+            </div>
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">Ghs 12,876</div>
+                  <div class="indicator">
+                     <i class="bx bx-up-arrow-alt"></i>
+                     <span class="text">Up from photocopy</span>
+                  </div>
+               </div>
+               <i class="bx bx-cart cart three"></i>
+            </div>
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Failed</div>
+                  <div class="number">11,086</div>
+                  <div class="indicator">
+                     <i class="bx bx-down-arrow-alt down"></i>
+                     <span class="text">Down From failed</span>
+                  </div>
+               </div>
+               <i class="bx bxs-cart-download cart four"></i>
+            </div>
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">Ghs 12,876</div>
+                  <div class="indicator">
+                     <i class="bx bx-up-arrow-alt"></i>
+                     <span class="text">Up from printing</span>
+                  </div>
+               </div>
+               <i class="bx bx-cart cart three"></i>
+            </div>
+            <div class="box">
+               <div class="right-side">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">Ghs 12,876</div>
+                  <div class="indicator">
+                     <i class="bx bx-up-arrow-alt"></i>
+                     <span class="text">Up from printing</span>
+                  </div>
+               </div>
+               <i class="bx bx-cart cart three"></i>
+            </div>
+         </div>
+
+         <div class="sales-boxes">
+            <div class="recent-sales box">
+               <div class="title">Recent Prints</div>
+               <div class="sales-details">
+                  <ul class="details">
+                     <li class="topic">Date</li>
+                     <li><a href="#">02 Jan 2024</a></li>
+                     <li><a href="#">02 Jan 2024</a></li>
+                     <li><a href="#">02 Jan 2024</a></li>
+                     <li><a href="#">02 Jan 2024</a></li>
+                     <li><a href="#">02 Jan 2024</a></li>
+                     <li><a href="#">02 Jan 2024</a></li>
+                     <li><a href="#">02 Jan 2024</a></li>
+                  </ul>
+                  <ul class="details">
+                     <li class="topic">Customer</li>
+                     <li><a href="#">Alex Doe</a></li>
+                     <li><a href="#">David Mart</a></li>
+                     <li><a href="#">Roe Parter</a></li>
+                     <li><a href="#">Diana Penty</a></li>
+                     <li><a href="#">Martin Paw</a></li>
+                     <li><a href="#">Doe Alex</a></li>
+                     <li><a href="#">Aiana Lexa</a></li>
+                  </ul>
+                  <ul class="details">
+                     <li class="topic">Status</li>
+                     <li><a href="#" style="color: green">Success</a></li>
+                     <li><a href="#" style="color: yellow">Pending</a></li>
+                     <li><a href="#" style="color: red">Failed</a></li>
+                     <li><a href="#" style="color: green">Success</a></li>
+                     <li><a href="#" style="color: yellow">Pending</a></li>
+                     <li><a href="#" style="color: red">Failed</a></li>
+                     <li><a href="#" style="color: green">Success</a></li>
+                     <li><a href="#" style="color: yellow">Pending</a></li>
+                  </ul>
+                  <ul class="details">
+                     <li class="topic">Total</li>
+                     <li><a href="#">Ghs 204.98</a></li>
+                     <li><a href="#">Ghs 24.55</a></li>
+                     <li><a href="#">Ghs 25.88</a></li>
+                     <li><a href="#">Ghs 170.66</a></li>
+                     <li><a href="#">Ghs 56.56</a></li>
+                     <li><a href="#">Ghs 44.95</a></li>
+                     <li><a href="#">Ghs 67.33</a></li>
+                     <li><a href="#">Ghs 23.53</a></li>
+                  </ul>
+               </div>
+               <div class="button">
+                  <a href="#">See All</a>
+               </div>
+            </div>
+            <div class="top-sales box">
+               <div class="title">Top Activities</div>
+               <ul class="top-sales-details">
+                  <li>
+                     <a href="#">
+                        <img src="images/sunglasses.jpg" alt="" />
+                        <span class="product">Scanning</span>
+                     </a>
+                     <span class="price">QTY: 8</span>
+                     <span class="price">Ghs 1107</span>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="images/jeans.jpg" alt="" />
+                        <span class="product">Printing </span>
+                     </a>
+                     <span class="price">QTY: 6</span>
+                     <span class="price">Ghs 1567</span>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="images/nike-min.jpg" alt="" />
+                        <span class="product">Typing</span>
+                     </a>
+                     <span class="price">QTY: 5</span>
+                     <span class="price">Ghs 1234</span>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="images/scarves.jpg" alt="" />
+                        <span class="product">Hermes Silk Scarves.</span>
+                     </a>
+                     <span class="price">QTY : 2</span>
+                     <span class="price">Ghs 1456</span>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </section>
+
+
+
+
+   <div class="toast-overlay" id="toast-overlay"></div>
+   <script type="text/javascript" th:src="@{/js/jquery-3.6.4.min.js}"></script>
+   <script type="text/javascript" th:src="@{/js/sweetalert.min.js}"></script>
+   <script type="text/javascript" th:src="@{/js/menu.js}"></script>
+   <script type="text/javascript" th:src="@{/js/toast.js}"></script>
+
+
+
+
+
+</body>
+
+</html>

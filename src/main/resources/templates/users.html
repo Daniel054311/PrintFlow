@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+   <link th:href="@{/css/search.css}" rel="stylesheet" />
+   <link th:href="@{/css/users.css}" rel="stylesheet" />
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <link th:href="@{/css/toast.css}" rel="stylesheet" />
+   <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+   <title>PrintFlow</title>
+
+</head>
+
+<body>
+
+   <div class="sidebar">
+      <div class="logo-details">
+         <i class="bx"> <img width="30px" style="border-radius: 100px;" height="30px"
+               src="https://i.pinimg.com/originals/22/cf/54/22cf5404f2941eb19ecf01c77fff8ff4.jpg" alt=""></i>
+         <span class="logo_name">PrintFlow</span>
+      </div>
+      <ul class="nav-links">
+         <li>
+            <a href="/dashboard/home" class="active">
+               <i class="bx bx-grid-alt"></i>
+               <span class="links_name">Home</span>
+            </a>
+         </li>
+         <li>
+            <a href="#">
+               <i class="bx bx-box"></i>
+               <span class="links_name">Users</span>
+            </a>
+         </li>
+         <li>
+            <a href="#">
+               <i class="bx bx-list-ul"></i>
+               <span class="links_name">Activities</span>
+            </a>
+         </li>
+
+         <li>
+            <a href="#">
+               <i class="bx bx-message"></i>
+               <span class="links_name">Feedback</span>
+            </a>
+         </li>
+
+         <li>
+            <a href="#">
+               <i class="bx bx-cog"></i>
+               <span class="links_name">Setting</span>
+            </a>
+         </li>
+         <li class="log_out">
+            <a href="#">
+               <i class="bx bx-log-out"></i>
+               <span class="links_name">Log out</span>
+            </a>
+         </li>
+      </ul>
+   </div>
+   <section class="home-section">
+      <nav>
+         <div class="sidebar-button">
+            <i class="bx bx-menu sidebarBtn"></i>
+            <span class="dashboard">Home</span>
+         </div>
+         <div class="search-box">
+            <input type="text" placeholder="Search..." />
+            <i class="bx bx-search"></i>
+         </div>
+         <div class="profile-details">
+            <img src="images/profile.jpg" alt="" />
+            <span class="admin_name">The Great</span>
+            <i class="bx bx-chevron-down"></i>
+         </div>
+      </nav>
+
+      <div class="home-content">
+
+         <div class="sales-boxes">
+            <div class="recent-sales box">
+               <div class="title">All Users</div>
+
+               <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."
+                  title="Type in a name">
+               <div id="myTableContainer">
+                  <table id="myTable">
+                     <thead>
+                        <tr>
+                           <th>Username</th>
+                           <th>Location</th>
+                           <th>Tel</th>
+                           <th>Profile</th>
+
+                           <th>Usermail</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+
+                     <tbody>
+                        <!-- User data will be dynamically inserted here -->
+                     </tbody>
+                  </table>
+
+               </div>
+            </div>
+            <div class="top-sales box">
+               <div class="title">Customers</div>
+               <ul class="top-sales-details">
+                  <li>
+                     <a href="#">
+                        <img src="images/sunglasses.jpg" alt="" />
+                        <span class="product">Scanning</span>
+                     </a>
+                     <span class="price">QTY: 8</span>
+                     <span class="price">Ghs 1107</span>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="images/jeans.jpg" alt="" />
+                        <span class="product">Printing </span>
+                     </a>
+                     <span class="price">QTY: 6</span>
+                     <span class="price">Ghs 1567</span>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="images/nike-min.jpg" alt="" />
+                        <span class="product">Typing</span>
+                     </a>
+                     <span class="price">QTY: 5</span>
+                     <span class="price">Ghs 1234</span>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <img src="images/scarves.jpg" alt="" />
+                        <span class="product">Hermes Silk Scarves.</span>
+                     </a>
+                     <span class="price">QTY : 2</span>
+                     <span class="price">Ghs 1456</span>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <div class="toast-overlay" id="toast-overlay"></div>
+   <script type="text/javascript" th:src="@{/js/toast.js}"></script>
+
+   <script type="text/javascript" th:src="@{/js/jquery-3.6.4.min.js}"></script>
+   <script type="text/javascript" th:src="@{/js/sweetalert.min.js}"></script>
+   <script type="text/javascript" th:src="@{/js/menu.js}"></script>
+   <script type="text/javascript" th:src="@{/js/search.js}"></script>
+   <script>
+
+      function fetchUsers() {
+         $.ajax({
+            type: "GET",
+            url: "/api/users/fetch",
+            success: function (users) {
+
+               $("#myTable tbody").empty();
+
+               users.forEach(function (user) {
+                  var row = $("<tr>");
+                  row.append($("<td>").text(user.username));
+                  row.append($("<td>").text(user.location));
+                  row.append($("<td>").text(user.tel));
+                  // Display the user profile image 
+                  var profileImage =
+                     $("<img>")
+                        .attr("src", `/api/files/fetch?filename=${user.profile}`)
+                        .attr("alt", "Profile Image")
+                        .css("max-width", "50px");
+
+                  row.append($("<td>").append(profileImage));
+                  //row.append($("<td>").text(user.password));
+                  row.append($("<td>").text(user.usermail));
+
+                  // Create a button with a data attribute to store the _id
+                  var buttondel = $("<button>").text("Del").addClass("del-btn").attr("data-id", user._id);
+                  var buttonview = $("<button>").text("View").addClass("view-btn").attr("data-id", user._id);
+                  var buttonedit = $("<button>").text("Edit").addClass("edit-btn").attr("data-id", user._id);
+                  // Attach a click event handler to the button
+                  buttondel.click(function () {
+                     // Retrieve the _id from the data attribute
+                     var _id = $(this).data("id");
+
+                     swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this user!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                     })
+                        .then((willDelete) => {
+                           if (willDelete) {
+                              // Attach a click event handler to the button
+                              // Send API request to delete the user with the given _id
+                              fetch(`/api/users/delete?_id=${_id}`, {
+                                 method: 'DELETE',
+                              })
+                                 .then(response => {
+                                    // Check if the request was successful (status code 200-299)
+                                    if (response.ok) {
+                                       swal("Good job!", "User deleted successfully", "success");
+                                       fetchUsers();
+                                    } else {
+                                       // Handle error scenarios
+                                       if (response.status === 404) {
+                                          swal("Hmmm!", "User not found", "warning");
+                                       } else {
+                                          swal("Oops!", "Error deleting user. Please try again.", "error");
+                                       }
+                                    }
+                                 })
+                                 .catch(error => {
+                                    // Handle network errors or other exceptions
+
+                                    swal("Oops!", "Something went wrong. Please try again.", "error");
+                                 });
+                           } else {
+                              // User clicked "Cancel" or closed the confirmation dialog
+                           }
+                        });
+                  });
+
+
+
+                  buttonview.click(function () {
+                     var _id = $(this).data("id");
+
+                     // Make GET request to fetch user information
+                     $.get(`/api/users/search?_id=${_id}`, function (response) {
+                        // Extract user information from the response
+                        var htmlContent = `
+                         <div>
+                             <p><strong>Username:</strong> ${response.username}</p>
+                             <p><strong>Location:</strong> ${response.location}</p>
+                             <p><strong>Profile:</strong><img width="30px" height="30px" src="/api/files/fetch?filename=${response.profile}"/></p>
+                             <p><strong>Telephone:</strong> ${response.tel}</p>
+                             <p><strong>Email:</strong> ${response.usermail}</p>
+                         </div>
+                     `;
+
+                        // Display Swal modal with user information
+                        Swal.fire({
+                           title: "<strong>User Information</strong>",
+                           icon: "info",
+                           html: htmlContent,
+                           showCloseButton: true,
+                           showCancelButton: true,
+                           focusConfirm: false,
+                           confirmButtonText: `<i class="fa fa-thumbs-up"></i> Great!`,
+                           confirmButtonAriaLabel: "Thumbs up, Okay",
+                           cancelButtonText: `<i class="fa fa-thumbs-down"></i>`,
+                        });
+                     });
+                  });
+
+
+                  buttonedit.click(function () {
+
+                     var _id = $(this).data("id");
+
+                     window.location.href = `/api/users/edit/${_id}`;
+
+
+                  });
+
+                  // Append the button to the row
+                  row.append($("<td>").append(buttondel, buttonview, buttonedit));
+
+                  // Append the row to the table
+                  $("#myTable tbody").append(row);
+               });
+            },
+            error: function (xhr, textStatus, errorThrown) {
+               // Handle error responses
+               if (xhr.status === 400 || xhr.status === 500) {
+                  swal("Oops!", "Somthing happened , try again", "error");
+               } else {
+                  swal("Oops!", "An unexpected error occurred.", "error");
+               }
+            }
+         });
+      }
+
+      $(document).ready(function () {
+         fetchUsers();
+      });
+
+      // Retrieve previous count from localStorage or initialize to 0
+      let previousCount = parseInt(localStorage.getItem('previousCount')) || 0;
+
+      function fetchCount() {
+         $.ajax({
+            type: "GET",
+            url: "/api/users/fetch",
+            success: function (data) {
+               // Get the current count from the received data
+               const currentCount = data.length;
+               if (currentCount !== previousCount) {
+                  fetchUsers();
+                  // Alert with new count if there's a change
+                  console.log('Change detected! New count: ' + currentCount);
+                  // Update previous count in localStorage only when there's a change
+                  localStorage.setItem('previousCount', currentCount);
+                  showToast("New user added ", "success", 10000);
+               }
+            },
+            error: function (xhr, status, error) {
+               console.error('Error fetching count:', error);
+            }
+         });
+      }
+
+      // Call fetchCount initially
+      fetchCount();
+
+      // Periodically fetch count every second
+      setInterval(fetchCount, 10000);
+
+
+
+
+   </script>
+
+</body>
+
+</html>

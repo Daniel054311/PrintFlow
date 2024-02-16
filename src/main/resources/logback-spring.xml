@@ -1,0 +1,15 @@
+<configuration>
+    <!-- Appender to log to a file -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>logs/application.log</file>
+        <encoder>
+            <!-- Updated pattern with full date -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger with file appender -->
+    <root level="info">
+        <appender-ref ref="file" />
+    </root>
+</configuration>

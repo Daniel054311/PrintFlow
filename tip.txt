@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Advanced File Upload</title>
+   <link rel="stylesheet" href="styles.css">
+   <style>
+      body {
+         font-family: Arial, sans-serif;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+         margin: 0;
+      }
+
+      .file-upload-container {
+         text-align: center;
+      }
+
+      .file-drop {
+         border: 2px dashed #ccc;
+         padding: 20px;
+         cursor: pointer;
+      }
+
+      .file-input {
+         display: none;
+      }
+
+      .selected-files {
+         margin-top: 20px;
+         font-size: 16px;
+      }
+
+      .file-row {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         background-color: #f5f5f5;
+         padding: 10px;
+         margin-top: 10px;
+      }
+
+      .remove-file {
+         cursor: pointer;
+         color: red;
+      }
+
+      .scan-button {
+         margin-top: 10px;
+         background-color: #4caf50;
+         color: white;
+         border: none;
+         padding: 10px 20px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 16px;
+         cursor: pointer;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="file-upload-container">
+      <div class="file-drop" id="fileDrop">
+         <p>Drag & Drop files here or</p>
+         <label for="fileInput" class="file-input-label">Click to upload a file</label>
+         <input type="file" id="fileInput" class="file-input"
+            accept="image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.zip"
+            multiple />
+         <button id="scanButton" class="scan-button">Scan</button>
+      </div>
+      <div id="selectedFiles" class="selected-files"></div>
+   </div>
+
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+   <script>
+      document.addEventListener('DOMContentLoaded', () => {
+         const fileInput = document.getElementById('fileInput');
+         const fileDrop = document.getElementById('fileDrop');
+         const selectedFiles = document.getElementById('selectedFiles');
+         const scanButton = document.getElementById('scanButton');
+
+         // Overall base drag and drop
+         document.body.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+         });
+
+         document.body.addEventListener('drop', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+         });
+
+         fileDrop.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileDrop.classList.add('drag-over');
+         });
+
+         fileDrop.addEventListener('dragleave', () => {
+            fileDrop.classList.remove('drag-over');
+         });
+
+         fileDrop.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileDrop.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+            e.stopPropagation(); // Stop propagation to prevent duplication
+         });
+
+         fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+         });
+
+         scanButton.addEventListener('click', () => {
+            // Add your scanning functionality here
+            // For simplicity, let's assume it returns an image blob
+            const scannedImageBlob = '';
+
+            const fileName = `scannedImage_${new Date().getTime()}.png`;
+            const fileInfo = { name: fileName };
+
+            appendFileRow(fileInfo);
+            uploadFile(scannedImageBlob, fileInfo);
+         });
+
+         const existingFileNames = [];
+
+         function handleFiles(files) {
+             if (files.length > 0) {
+                 for (const file of files) {
+                     if (isValidFileType(file)) {
+                         const fileName = file.name;
+         
+                         // Check if the file with the same name already exists
+                         if (existingFileNames.includes(fileName)) {
+                             // Handle duplicate file, you can choose to override or block
+                             console.log(`File with name ${fileName} already exists!`);
+                             continue; // Skip processing the duplicate file
+                         }
+         
+                         existingFileNames.push(fileName); // Add the filename to the list
+         
+                         if (file.type === 'application/zip') {
+                             unzipFile(file);
+                         } else {
+                             const fileInfo = { name: fileName };
+                             appendFileRow(fileInfo);
+                         }
+                     }
+                 }
+             }
+         }
+         
+
+         function isValidFileType(file) {
+            const acceptedTypes = ['image', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/zip', 'text/plain'];
+            return acceptedTypes.some(type => file.type.startsWith(type)) && file.type !== 'image/svg+xml';
+         }
+
+
+
+         function appendFileRow(fileInfo) {
+            const fileRow = document.createElement('div');
+            fileRow.classList.add('file-row');
+
+            const fileInfoDiv = document.createElement('div');
+            fileInfoDiv.textContent = `Selected File: ${fileInfo.name}`;
+            fileRow.appendChild(fileInfoDiv);
+
+            const removeButton = document.createElement('div');
+            removeButton.classList.add('remove-file');
+            removeButton.textContent = 'X';
+            removeButton.addEventListener('click', () => {
+               fileRow.remove();
+               removeFileFromStorage(fileInfo);
+            });
+            fileRow.appendChild(removeButton);
+
+            selectedFiles.appendChild(fileRow);
+
+            // Store the file info in local storage
+            const storedFiles = JSON.parse(localStorage.getItem('selectedFiles')) || [];
+            storedFiles.push(fileInfo);
+            localStorage.setItem('selectedFiles', JSON.stringify(storedFiles));
+         }
+
+         async function uploadFile(fileBlob, fileInfo) {
+            // Your upload logic
+         }
+
+         function removeFileFromStorage(fileInfo) {
+            const storedFiles = JSON.parse(localStorage.getItem('selectedFiles')) || [];
+            const updatedFiles = storedFiles.filter(file => file.name !== fileInfo.name);
+            localStorage.setItem('selectedFiles', JSON.stringify(updatedFiles));
+         }
+
+         function unzipFile(zipFile) {
+            // Add your unzip logic here
+            // For simplicity, let's assume it returns an array of file blobs
+            const unzippedFiles = [];
+
+            for (const file of unzippedFiles) {
+               const fileName = file.name;
+               const fileInfo = { name: fileName };
+               appendFileRow(fileInfo);
+            }
+         }
+      });
+   </script>
+</body>
+
+</html>

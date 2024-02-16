@@ -1,0 +1,178 @@
+body {
+   font-family: Arial, sans-serif;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+   margin: 0;
+}
+
+.file-upload-container {
+   text-align: center;
+}
+
+.file-drop {
+   border: 2.5px dashed #cdcdcd;
+   padding: 30px 40px;
+   cursor: pointer;
+}
+
+.file-input {
+   display: none;
+}
+
+
+
+.file-row {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+   margin-top: 10px;
+   background: #FFFFFF;
+   border: 0 solid #E2E8F0;
+   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+   box-sizing: border-box;
+   color: #1A202C;
+   font-family: Inter, sans-serif;
+   font-size: 1rem;
+   font-weight: 700;
+   height: 56px;
+   line-height: 24px;
+   overflow-wrap: break-word;
+   text-decoration: none;
+   width: 100%;
+   border-radius: 8px;
+   cursor: pointer;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+}
+
+.file-name {
+   flex: 1;
+   /* Allow the file name to take up available space */
+   margin-right: 10px;
+   /* Add margin to the right of the file name */
+}
+
+.remove-file {
+   cursor: pointer;
+   color: red;
+   margin-left: 10px;
+   border: 1px solid red;
+   padding: 7px;
+   border-radius: 50%;
+   height: 12px;
+   width: 12px;
+   /* Make the close button round */
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+
+
+.submit-button {
+   align-items: center;
+   appearance: none;
+   background-color: #fff;
+   border-radius: 24px;
+   border-style: none;
+   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+   box-sizing: border-box;
+   color: #3c4043;
+   cursor: pointer;
+   display: inline-flex;
+   fill: currentcolor;
+   font-family: "Google Sans", Roboto, Arial, sans-serif;
+   font-size: 14px;
+   font-weight: 500;
+   height: 48px;
+   justify-content: center;
+   letter-spacing: .25px;
+   line-height: normal;
+   max-width: 100%;
+   overflow: visible;
+   padding: 2px 24px;
+   position: relative;
+   text-align: center;
+   text-transform: none;
+   transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+   width: 300px;
+   will-change: transform, opacity;
+   z-index: 0;
+   margin: 10px;
+}
+
+
+.scan-button {
+   align-items: center;
+   appearance: none;
+   background-color: #fff;
+   border-radius: 24px;
+   border-style: none;
+   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+   box-sizing: border-box;
+   color: #3c4043;
+   cursor: pointer;
+   display: inline-flex;
+   fill: currentcolor;
+   font-family: "Google Sans", Roboto, Arial, sans-serif;
+   font-size: 14px;
+   font-weight: 500;
+   height: 48px;
+   justify-content: center;
+   letter-spacing: .25px;
+   line-height: normal;
+   max-width: 100%;
+   overflow: visible;
+   padding: 2px 24px;
+   position: relative;
+   text-align: center;
+   text-transform: none;
+   transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+   width: auto;
+   will-change: transform, opacity;
+   z-index: 0;
+}
+
+
+.button-17:hover {
+   background: #d3d3d3;
+   color: #174ea6;
+}
+
+.button-group {
+   display: inline;
+   flex-direction: row;
+   justify-content: space-between;
+
+}
+
+#selectedFiles {
+   overflow-y: auto; /* Enable vertical scrolling */
+   max-height: 200px;
+   margin: 20px;
+   margin-top: 20px;
+   font-size: 16px;
+}
+
+#selectedFiles::-webkit-scrollbar {
+   width: 6px; /* Set the width of the scrollbar */
+}
+
+#selectedFiles::-webkit-scrollbar-thumb {
+   background-color: #949494; /* Set the color of the scrollbar thumb */
+   border-radius: 5px; /* Add rounded corners to the thumb */
+}
+
+#selectedFiles::-webkit-scrollbar-track {
+   background-color: #f5f5f5; /* Set the color of the scrollbar track */
+}
