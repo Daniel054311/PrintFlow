@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.spring.printFlow.models.User;
 import com.spring.printFlow.repository.UserRepository;
 
+@SuppressWarnings("null")
 @Service
 public class userService {
     @Autowired

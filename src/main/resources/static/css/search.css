@@ -46,6 +46,10 @@
   padding: 12px;
 }
 
+#myTable td{
+  font-size:11px;
+}
+
 
 #myTable tr {
   border-bottom: 1px solid #ddd;

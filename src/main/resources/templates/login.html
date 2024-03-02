@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <title>Login</title>
 </head>
 
@@ -31,7 +33,8 @@
 
             <div class="form__field">
 
-                <button type="button" class="button-23 input" value="Login" name="submit" id="submit" onclick="submitForm()">Login</button>
+                <button type="button" class="button-23 input" value="Login" name="submit" id="submit"
+                    style="background: #ea4c88" onclick="submitForm()">Login</button>
             </div>
 
         </form>
@@ -72,8 +75,26 @@
                 success: function (response) {
 
                     // Handle success scenario
-                    swal("Good job!", response, "success");
-                    window.location.href = "/dashboard/home";
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.onmouseenter = Swal.stopTimer;
+                          toast.onmouseleave = Swal.resumeTimer;
+                        }
+                      });
+                      Toast.fire({
+                        icon: "success",
+                        title: "Signed in successfully"
+                      });
+
+                    setTimeout(function () {
+                        window.location.href = "/dashboard/home";
+
+                    }, 3000);
 
                 },
 

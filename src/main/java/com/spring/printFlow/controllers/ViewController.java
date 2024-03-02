@@ -25,6 +25,11 @@ public class ViewController {
       return "users";
    }
 
+   @GetMapping("/dashboard/preview-customer-files")
+   public String previewFile() {
+      return "previewCustomerFile";
+   }
+
 
 
 }
